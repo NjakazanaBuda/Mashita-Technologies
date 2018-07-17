@@ -1,0 +1,695 @@
+Course_Type
+________________________________________________________________________________________
+MySQL
+___________________________________________________________________________________________
+CREATE TABLE course_type(	
+course_type_id long(6) zerofill not null auto_increment,
+course_type VARCHAR(50) NOT NULL,
+PRIMARY KEY (course_type_id)
+)
+
+Course_Level
+________________________________________________________________________________________
+MySQL
+___________________________________________________________________________________________
+CREATE TABLE course_level(	
+course_level_id long(6) zerofill not null auto_increment,
+course_level VARCHAR(50) NOT NULL,
+PRIMARY KEY (course_level_id)
+)
+
+
+courses
+_________________________________________________________________________________
+MySQL
+____________________
+CREATE TABLE courses(
+   course_id long(6) zerofill not null auto_increment,
+   course_type VARCHAR(50) NOT NULL,
+   course_name VARCHAR(100) NOT NULL,
+   course_level VARCHAR(50) NOT NULL,
+   PRIMARY KEY (course_id)
+    );
+
+
+Provinces
+_________________________________________________________________________________
+MySQL
+________________________________________________
+CREATE TABLE provinces(
+   province_id long(6) zerofill not null auto_increment,
+   province_name	VARCHAR(255) NOT NULL,
+   province_abbriation	VARCHAR(4) NOT NULL,
+   PRIMARY KEY (province_id)
+   );
+
+City
+_________________________________________________________________________________
+MySQL
+________________________________________________
+   CREATE TABLE city(
+   city_id long(6) zerofill not null auto_increment,
+   city_name	VARCHAR(255) NOT NULL,
+   city_abbriation	VARCHAR(4) NOT NULL,
+   city_code int(5) NOT NULL,
+   province_id long NOT NULL references provinces(province_id),
+   PRIMARY KEY (city_id)
+   );
+   
+Institution_Type
+________________________________________________________________________________________
+MySQL
+___________________________________________________________________________________________
+CREATE TABLE institution_type(	
+institution_type_id long(6) zerofill not null auto_increment,
+institution_type VARCHAR(50) NOT NULL,
+PRIMARY KEY (institution_type_id)
+)
+
+Institution
+________________________________________________________________________________________
+MySQL
+_______________________________________________________
+CREATE TABLE institutions(
+   institution_id long(6) zerofill not null auto_increment,
+   institution_type VARCHAR(50) NOT NULL,
+   institution_name VARCHAR(100) NOT NULL,
+   insttitution_address_line1 VARCHAR(100) NOT NULL,
+   insttitution_address_line2 VARCHAR(100) NOT NULL,
+   province_id long NOT NULL references provinces(province_id),
+   town_address_line4 VARCHAR(50) NOT NULL,
+   contact_no int(10) NOT NULL,
+   alternative_contact_no int(10) NOT NULL,
+   email_address VARCHAR(50) NOT NULL,
+   accreditation_start_date date NOT NULL,
+   accreditation_end_date date NOT NULL,
+   accreditation_number VARCHAR(100) NOT NULL,
+   PRIMARY KEY (institution_id)
+    );
+
+
+MySQL
+____________________________________________________________________________
+
+CREATE TABLE courses_institutions(
+institution_id long NOT NULL references institutions(institution_id),
+course_id long NOT NULL references acourses(course_id),
+PRIMARY KEY (institution_id,course_id)
+   );
+   
+MySQL
+____________________________________________________________________________
+
+CREATE TABLE investigators(
+investigator_number long(6) zerofill not null auto_increment,
+investigator_first_name VARCHAR(100) NOT NULL,
+investigator_middle_name VARCHAR(100) NOT NULL,
+investigator_surname_name VARCHAR(100) NOT NULL,
+investigator_id_number long(14) not null,
+investigator_gender VARCHAR(20) not null,
+investigator_address_line1 VARCHAR(100) NOT NULL,
+investigator_address_line2 VARCHAR(100) NOT NULL,
+investigator_province INT NOT NULL references provinces(province_id),
+town_address_line4 VARCHAR(50) NOT NULL,
+contact_no int(10) NOT NULL,
+alternative_contact_no int(10) NOT NULL,
+email_address VARCHAR(50) NOT NULL,
+PRIMARY KEY (investigator_number)
+   );
+
+MySQL
+_______________________________________________________
+CREATE TABLE reported_institutions(
+   reported_institution_id long(6) zerofill not null auto_increment,
+   reported_type VARCHAR(50) NOT NULL,
+   institution_name VARCHAR(100) not null,
+   course_name VARCHAR(100),
+   reported_date date not null,
+   institution_address_line1 VARCHAR(100) NOT NULL,
+   institution_address_line2 VARCHAR(100) NOT NULL,
+   institution_address_line3 VARCHAR(100) NOT NULL,
+   province_id long NOT NULL references provinces(province_id),
+   city_town VARCHAR(50) NOT NULL,
+   suburb_area varchar(50) NOT NULL,
+   address_code varchar(10) NOT NULL,
+   pin_location VARCHAR(50),
+   PRIMARY KEY (reported_institution_id)
+    );
+	
+CREATE TABLE reported_institution_invesigator(
+reported_institution_id long NOT NULL references reported_institution(reported_institution_id),
+investigator_number long NOT NULL references investigators(investigator_number),
+PRIMARY KEY (reported_institution_id,investigator_number)
+);
+   
+   
+   
+   
+   
+DROP TABLE courses PURGE;
+DROP TABLE accredited_providers PURGE;
+
+create sequence courses_seq
+minvalue 1
+maxvalue 999999999999999999999
+start with 1
+increment by 1;
+
+DROP SEQUENCE courses_seq;
+
+
+create sequence accredited_providers_seq
+minvalue 1
+maxvalue 999999999999999999999
+start with 1
+increment by 1;
+
+Set1 Oracle
+___________________________________________________________________________________________________
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Business Management N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Educare N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Financial Management N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Human Resource Management N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Management Assistant N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Mechanical Engineering N4-N6');
+
+Set1 MySQL
+___________________________________________________________________________________________________
+INSERT INTO courses (course_name) VALUES ('National Certificate: Business Management N4-N6'); 
+INSERT INTO courses (course_name) VALUES('National Certificate: Educare N4-N6'); 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Financial Management N4-N6'); 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Human Resource Management N4-N6'); 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Management Assistant N4-N6'); 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Mechanical Engineering N4-N6'); 
+
+Set2 Oracle
+________________________________________________________________________________________________________
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Art and Design N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Interior Decorating N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Popular Music: Studio Work N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Human Resource Management N4-N6'); 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Public Relations N4-N6'); 
+
+
+Set2 MySQL
+________________________________________________________________________________________________________
+INSERT INTO courses (course_name) VALUES ('National Certificate: Art and Design N4-N6'); 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Interior Decorating N4-N6'); 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Popular Music: Studio Work N4-N6'); 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Human Resource Management N4-N6'); 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Public Relations N4-N6'); 
+
+
+
+Set3 Oracle
+________________________________________________________________________________________________________
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Marketing Management N4-N6');
+
+Set3 MySQL
+________________________________________________________________________________________________________
+INSERT INTO courses (course_name) VALUES ('National Certificate: Marketing Management N4-N6');
+
+
+Set4
+________________________________________________________________________________________________________
+
+All courses already inserted.
+
+Set5 ORACLE
+__________________________________________________________________________________________________________ 
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Multi-Disciplinary Drawing Office Practice N4-N6');
+
+Set5 MySQL
+__________________________________________________________________________________________________________ 
+INSERT INTO courses (course_name) VALUES ('National Certificate: Multi-Disciplinary Drawing Office Practice N4-N6');
+
+Set6 Oracle
+______________________________________________________________________________________________________________________________
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Medical Secretary N4-N6');
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Legal Secretary N4-N6');
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Tourism N4-N6');
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Public Management N4-N6');
+
+
+Set6 MySQL
+______________________________________________________________________________________________________________________________
+INSERT INTO courses (course_name) VALUES ('National Certificate: Medical Secretary N4-N6');
+INSERT INTO courses (course_name) VALUES ('National Certificate: Legal Secretary N4-N6');
+INSERT INTO courses (course_name) VALUES ('National Certificate: Tourism N4-N6');
+INSERT INTO courses (course_name) VALUES ('National Certificate: Public Management N4-N6');
+
+
+
+Set7 Oracle
+______________________________________________________________________________________________________________________________
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Civil Engineering N4-N6');
+INSERT INTO courses VALUES (courses_seq.NEXTVAL, 'National Certificate: Electrical Engineering N4-N6');
+
+Set7 MySQL
+______________________________________________________________________________________________________________________________
+INSERT INTO courses (course_name) ('National Certificate: Civil Engineering N4-N6');
+INSERT INTO courses (course_name) ('National Certificate: Electrical Engineering N4-N6');
+
+
+select * from courses where course_name = 'National Certificate: Marketing Management N4-N6';
+
+Set2.1 Oracle
+______________________________________________________________________________________________________________________________
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Adequate Technical College','SDP1224/16/0044','BlockA Shop 3 and 4 Walter Sisulu Avenue Onverwatcht','Lephalale','014 763 1273 071 234 3019','11-Nov-2016','11-Nov-2021');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Artshub Institute Pty Ltd','SDP','102 Lillian Ngoyi Street Cnr Henry Nxumalo Street New town','Johannesburg','011 492 1350 / 071 964 4356','11-Nov-2016','11-Nov-2021');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Akanani FET Academy','SDP1220/16/0041','29 B and 31 B Joubert Street','Bronkhorspruit','013 932 2358 / 082 411 8117','10-Jun-2016','10-Jun-2021');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'American College of Science and Technology','SDP1224/16/0041','Al-Smith Building Office 14 C Second Floor 26 Thabo Mbeki Street','Polokwane','015 295 2141 / 071 559 3474','10-Jun-2016','10-Jun-2021');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Academy of Advanced Technology(Pty) Ltd','QCTO NATED/14/0076','The Quays 31 Signal Road Durban point','Waterfront','082 267 1236','05-Aug-2014','05-Aug-2019');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Academy of Advanced Technology(Pty) Ltd','QCTO NATED/14/0066','c/o Beyers Naude Drive and Milner Avenue','Johannesburg','011 888 7555 / 082 412 3271','18-Jul-2014','18-Jul-2019');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Academy IDT','QCTO NATED/14/0106','57 Buitenkant Cnr Roeland Street','Cape Town','086 170 7773 / 083 251 8187','13-Jan-2015','13-Jan-2020');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Academy at Vaal Triangle','QCTO NATED/15/0104','Permanent Building 20 Voortrekker Street','Vereeniging','016 421 2606 / 073 437 2170','12-Jan-2015','12-Jan-2020');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Academy of Business and Computer Studies','QCTO NATED/15/0187','1st floor Keniworth House 217 Pine Street','Durban','011 832 2851 / 011 056 6877','23-Nov-2015','23-Nov-2020');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Academy of Business and Computer Studies','SDP1220/16/0049','No 1 de Villiers Building Floor 10 and 11 De Villiers Street','Johannesburg','011 832 2851 / 011 056 6877','24-Aug-2016','24-Aug-2021');
+INSERT INTO accredited_providers VALUES (accredited_providers_seq.NEXTVAL,'Academy of Training and Development','QCTO NATED/15/0417','No 134-136 Oxford Street 2nd Floor','East London','043 642 2966 / 043 742 4439','18-May-2015','18-May-2020');
+
+Set2.1 MySQL
+______________________________________________________________________________________________________________________________
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Adequate Technical College','SDP1224/16/0044','BlockA Shop 3 and 4 Walter Sisulu Avenue Onverwatcht','Lephalale','014 763 1273 071 234 3019','11-Nov-2016','11-Nov-2021');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date)VALUES ('Artshub Institute Pty Ltd','SDP','102 Lillian Ngoyi Street Cnr Henry Nxumalo Street New town','Johannesburg','011 492 1350 / 071 964 4356','11-Nov-2016','11-Nov-2021');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Akanani FET Academy','SDP1220/16/0041','29 B and 31 B Joubert Street','Bronkhorspruit','013 932 2358 / 082 411 8117','10-Jun-2016','10-Jun-2021');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('American College of Science and Technology','SDP1224/16/0041','Al-Smith Building Office 14 C Second Floor 26 Thabo Mbeki Street','Polokwane','015 295 2141 / 071 559 3474','10-Jun-2016','10-Jun-2021');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Academy of Advanced Technology(Pty) Ltd','QCTO NATED/14/0076','The Quays 31 Signal Road Durban point','Waterfront','082 267 1236','05-Aug-2014','05-Aug-2019');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Academy of Advanced Technology(Pty) Ltd','QCTO NATED/14/0066','c/o Beyers Naude Drive and Milner Avenue','Johannesburg','011 888 7555 / 082 412 3271','18-Jul-2014','18-Jul-2019');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Academy IDT','QCTO NATED/14/0106','57 Buitenkant Cnr Roeland Street','Cape Town','086 170 7773 / 083 251 8187','13-Jan-2015','13-Jan-2020');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Academy at Vaal Triangle','QCTO NATED/15/0104','Permanent Building 20 Voortrekker Street','Vereeniging','016 421 2606 / 073 437 2170','12-Jan-2015','12-Jan-2020');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Academy of Business and Computer Studies','QCTO NATED/15/0187','1st floor Keniworth House 217 Pine Street','Durban','011 832 2851 / 011 056 6877','23-Nov-2015','23-Nov-2020');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Academy of Business and Computer Studies','SDP1220/16/0049','No 1 de Villiers Building Floor 10 and 11 De Villiers Street','Johannesburg','011 832 2851 / 011 056 6877','24-Aug-2016','24-Aug-2021');
+INSERT INTO accredited_providers (skills_development_providers,accreditation_number,physical_address,city,contact_no,start_date,end_date) VALUES ('Academy of Training and Development','QCTO NATED/15/0417','No 134-136 Oxford Street 2nd Floor','East London','043 642 2966 / 043 742 4439','18-May-2015','18-May-2020');
+
+Set3.1 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(1,1);
+INSERT INTO courses_accredited_providers VALUES(2,1);
+INSERT INTO courses_accredited_providers VALUES(3,1);
+INSERT INTO courses_accredited_providers VALUES(4,1);
+INSERT INTO courses_accredited_providers VALUES(5,1);
+INSERT INTO courses_accredited_providers VALUES(6,1);
+INSERT INTO courses_accredited_providers VALUES(7,1);
+
+Set3.1 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers(course_id,provider_id) VALUES(1,1);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(2,1);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(3,1);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(4,1);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(5,1);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(6,1);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(19,1);
+
+
+Set3.2 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(19,2);
+INSERT INTO courses_accredited_providers VALUES(20,2);
+INSERT INTO courses_accredited_providers VALUES(4,2);
+INSERT INTO courses_accredited_providers VALUES(8,2);
+INSERT INTO courses_accredited_providers VALUES(10,2);
+
+Set3.2 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(7,2);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(8,2);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(4,2);
+INSERT INTO courses_accredited_providers(course_id,provider_id)  VALUES(9,2);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(11,2);
+
+Set3.3 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(18,3);
+INSERT INTO courses_accredited_providers VALUES(4,3);
+INSERT INTO courses_accredited_providers VALUES(10,3);
+INSERT INTO courses_accredited_providers VALUES(5,3);
+INSERT INTO courses_accredited_providers VALUES(11,3);
+
+Set3.3 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(10,3);
+INSERT INTO courses_accredited_providers(course_id,provider_id)  VALUES(4,3);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(11,3);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(5,3);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(12,3);
+
+
+Set3.4 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(1,4);
+INSERT INTO courses_accredited_providers VALUES(18,4);
+INSERT INTO courses_accredited_providers VALUES(3,4);
+
+Set3.4 My SQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(1,4);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(10,4);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(3,4);
+
+Set3.5 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(12,5);
+
+Set3.5 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(13,5);
+
+
+Set3.6 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(12,6);
+
+Set3.6 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(13,6);
+
+Set3.7 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(12,7);
+
+Set3.7 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(13,7);
+
+Set3.8 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(13,8);
+INSERT INTO courses_accredited_providers VALUES(3,8);
+INSERT INTO courses_accredited_providers VALUES(1,8);
+INSERT INTO courses_accredited_providers VALUES(4,8);
+INSERT INTO courses_accredited_providers VALUES(11,8);
+INSERT INTO courses_accredited_providers VALUES(14,8);
+INSERT INTO courses_accredited_providers VALUES(10,8);
+INSERT INTO courses_accredited_providers VALUES(16,8);
+INSERT INTO courses_accredited_providers VALUES(15,8);
+
+Set3.8 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(14,8);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(3,8);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(1,8);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(4,8);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(12,8);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(15,8);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(11,8);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(17,8);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(16,8);
+
+Set3.9 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(4,9);
+INSERT INTO courses_accredited_providers VALUES(5,9);
+INSERT INTO courses_accredited_providers VALUES(17,9);
+INSERT INTO courses_accredited_providers VALUES(1,9);
+INSERT INTO courses_accredited_providers VALUES(2,9);
+INSERT INTO courses_accredited_providers VALUES(7,9);
+INSERT INTO courses_accredited_providers VALUES(3,9);
+INSERT INTO courses_accredited_providers VALUES(6,9);
+INSERT INTO courses_accredited_providers VALUES(16,9);
+INSERT INTO courses_accredited_providers VALUES(10,9);
+INSERT INTO courses_accredited_providers VALUES(11,9);
+
+
+Set3.9 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(4,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(5,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(18,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(1,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(2,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(19,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(3,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(6,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(17,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(12,9);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(11,9);
+
+
+
+Set3.10 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(1,10);
+INSERT INTO courses_accredited_providers VALUES(17,10);
+INSERT INTO courses_accredited_providers VALUES(7,10);
+INSERT INTO courses_accredited_providers VALUES(6,10);
+INSERT INTO courses_accredited_providers VALUES(3,10);
+INSERT INTO courses_accredited_providers VALUES(4,10);
+INSERT INTO courses_accredited_providers VALUES(5,10);
+INSERT INTO courses_accredited_providers VALUES(11,10);
+INSERT INTO courses_accredited_providers VALUES(16,10);
+INSERT INTO courses_accredited_providers VALUES(10,10);
+INSERT INTO courses_accredited_providers VALUES(15,10);
+
+Set3.10 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(1,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(18,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(19,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(6,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(3,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(4,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(5,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(12,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(17,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(11,10);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(16,10);
+
+
+
+Set3.11 Oracle
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers VALUES(1,11);
+INSERT INTO courses_accredited_providers VALUES(3,11);
+INSERT INTO courses_accredited_providers VALUES(4,11);
+INSERT INTO courses_accredited_providers VALUES(11,11);
+INSERT INTO courses_accredited_providers VALUES(10,11);
+
+Set3.11 MySQL
+___________________________________________________________________________________________________________________________________________________________________
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(1,11);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(3,11);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(4,11);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(12,11);
+INSERT INTO courses_accredited_providers (course_id,provider_id) VALUES(11,11);
+
+
+http://www.sergiy.ca/how-to-write-many-to-many-search-queries-in-mysql-and-hibernate/
+https://dzone.com/articles/comparing-tables-in-different-databases-with-dynamic-lookup
+
+
+
+https://megocode3.wordpress.com/2008/01/04/understanding-a-sql-junction-table/
+
+
+
+SELECT StudentName, RoomNumber
+FROM StudentClassroom
+JOIN Students ON Students.StudentID = StudentClassroom.StudentID
+JOIN Classrooms ON Classrooms.ClassroomID = StudentClassroom.ClassroomID
+https://www.tutorialspoint.com/sql_certificate/get_data_from_multiple_tables.htm
+
+
+
+
+select * from accredited_providers;
+
+
+UPDATE accredited_providers
+SET skills_development_providers = 'Artshub Institute Pty Ltd'
+WHERE city = 'Johannesburg';
+
+
+
+UPDATE courses
+SET course_name = 'National Certificate Engineering Studies N4-N6'
+WHERE course_id = 18;
+
+UPDATE courses
+SET course_name = 'Human Resource Management N4-N6 Testing'
+WHERE course_id = 9;
+
+
+https://www.mkyong.com/hibernate/hibernate-many-to-many-relationship-example/
+https://www.tutorialspoint.com/hibernate/hibernate_many_to_many_mapping.htm
+https://dzone.com/articles/building-a-data-repository-with-spring-data
+http://www.codejava.net/frameworks/hibernate/hibernate-many-to-many-xml-mapping-example
+https://howtoprogramwithjava.com/hibernate-manytomany-unidirectional-bidirectional/
+http://www.java4s.com/hibernate/hibernate-many-to-many-mapping-example/
+
+
+SELECT E.*, D.*
+FROM Employee AS E
+    LEFT JOIN EmpDept AS ED ON E.EmpID  = ED.EmpID 
+    LEFT JOIN Department AS D ON ED.DeptID  = D.DeptID 
+WHERE E.EmpId = @EmpId
+
+SELECT E.*, D.*
+FROM Department AS D
+    LEFT JOIN EmpDept AS ED ON ED.DeptID  = D.DeptID 
+    LEFT JOIN Employee AS E ON ED.EmpID  = E.EmpID 
+WHERE D.DeptId = @DeptId
+
+
+https://www.codeproject.com/Questions/383844/Sql-Queries-to-show-contents-of-the-table-many-to
+http://stackoverflow.com/questions/2052333/single-sql-query-on-many-to-many-relationship
+https://www.codeproject.com/Articles/1069098/Hibernate-Many-to-Many-Mapping-via-Join-Table
+
+
+SELECT E.*, D.*
+FROM Employee AS E
+    LEFT JOIN EmpDept AS ED ON E.EmpID  = ED.EmpID 
+    LEFT JOIN Department AS D ON ED.DeptID  = D.DeptID 
+WHERE E.EmpId = @EmpId
+
+SELECT E.*, D.*
+FROM Department AS D
+    LEFT JOIN EmpDept AS ED ON ED.DeptID  = D.DeptID 
+    LEFT JOIN Employee AS E ON ED.EmpID  = E.EmpID 
+WHERE D.DeptId = @DeptId
+
+
+SELECT P.provider_id,P.skills_development_providers,P.accreditation_number,P.physical_address,P.city,C.course_name
+FROM accredited_providers P
+LEFT JOIN courses_accredited_providers CP ON P.provider_id  = CP.provider_id
+LEFT JOIN courses C ON CP.course_id  = C.course_id;
+where P.provider_id = 1;
+
+
+
+SELECT DISTINCT P.provider_id,P.skills_development_providers,C.course_name
+FROM accredited_providers P
+LEFT JOIN courses_accredited_providers CP ON P.provider_id  = CP.provider_id
+LEFT JOIN courses C ON CP.course_id  = C.course_id
+where P.provider_id = 1
+group by P.provider_id,P.skills_development_providers,C.course_name;
+
+SELECT P.provider_id,P.skills_development_providers,LISTAGG(C.course_name, ';') WITHIN GROUP (ORDER BY C.course_id) "Skills Provider"
+FROM accredited_providers P
+LEFT JOIN courses_accredited_providers CP ON P.provider_id  = CP.provider_id
+LEFT JOIN courses C ON CP.course_id  = C.course_id
+where P.provider_id = 1
+group by P.provider_id,P.skills_development_providers,C.course_name;
+
+
+SELECT DISTINCT P.provider_id,P.skills_development_providers,C.course_name
+FROM accredited_providers P
+LEFT JOIN courses_accredited_providers CP ON P.provider_id  = CP.provider_id
+LEFT JOIN courses C ON CP.course_id  = C.course_id
+where P.provider_id = 1
+group by P.provider_id,P.skills_development_providers,C.course_name;
+
+
+https://tryingbloggingin.wordpress.com/2014/02/25/instant-search-bar-using-java-servlets-jquery-and-jsp/
+
+http://viralpatel.net/blogs/tutorial-create-autocomplete-feature-with-java-jsp-jquery/
+
+
+http://www.programming-free.com/2012/08/ajax-with-jsp-and-servlet-using-jquery.html
+
+http://www.programming-free.com/2013/03/ajax-fetch-data-from-database-in-jsp.html
+
+
+
+http://www.javaquery.com/2011/07/how-to-get-value-from-database-without.html
+https://www.codeproject.com/Questions/651708/get-database-values-to-a-search-textbox
+http://www.mysamplecode.com/2012/04/jquery-ajax-request-response-java.html
+
+
+http://www.javatpoint.com/ajax-example-with-database  check this.
+http://www.javatpoint.com/comment-form-example-using-ajax-in-java check this.
+https://www.tutorialspoint.com/hibernate/hibernate_native_sql.htm
+http://stackoverflow.com/questions/23666277/how-to-use-listagg-in-hibernate/30637036#30637036
+
+
+
+
+
+
+http://o7planning.org/en/10285/create-a-simple-java-web-application-using-servlet-jsp-and-jdbc check
+
+http://www.codeweblog.com/hibernate-s-hql-query/
+
+SELECT s.name,c.name FROM Student s  (inner) join s.classes c
+
+
+Outer join (left connected / right connections)
+_______________________________________________________________
+SELECT s.name, c.name FROM Student s left join s.classes c
+SELECT s.name, c.name FROM Student s right join s.classes c
+
+
+http://www.journaldev.com/3422/hibernate-native-sql-query-example
+
+
+String sql = "SELECT first_name, salary FROM EMPLOYEE";
+         SQLQuery query = session.createSQLQuery(sql);
+         query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+         List data = query.list();
+
+
+	 http://www.journaldev.com/3422/hibernate-native-sql-query-example
+
+
+	 https://danielniko.wordpress.com/2012/12/03/simple-crud-using-java-hibernate-and-mysql/
+
+
+
+
+SELECT
+     r.title,
+      cr2.category_id
+FROM
+     category_resource cr
+INNER JOIN resource r
+ON cr.resource_id = r.id
+INNER JOIN category_resource cr2 on cr2.resource_id = r.id
+WHERE cr.category_id IN (9,10)
+GROUP BY cr2.category_id,r.title
+ORDER BY r.title
+
+
+
+
+SELECT
+     P.provider_id,P.skills_development_providers,P.accreditation_number,P.physical_address,P.city,contact_no,P.start_date,P.end_date,GROUP_CONCAT(C.course_name),GROUP_CONCAT(C.course_id)
+FROM accredited_providers P
+LEFT JOIN courses_accredited_providers CP ON P.provider_id  = CP.provider_id
+LEFT JOIN courses C ON CP.course_id  = C.course_id
+where P.provider_id = 1
+group by P.provider_id,P.skills_development_providers,P.accreditation_number,P.physical_address,P.city,contact_no,P.start_date,P.end_date;
+
+
+SELECT 
+P.provider_id,P.skills_development_providers,P.accreditation_number,P.physical_address,P.city,contact_no,P.start_date,P.end_date,GROUP_CONCAT(C.course_name) 
+FROM accredited_providers P 
+LEFT JOIN courses_accredited_providers CP ON P.provider_id  = CP.provider_id 
+LEFT JOIN courses C ON CP.course_id  = C.course_id 
+where P.skills_development_providers = 'Adequate Technical College'
+group by P.provider_id,P.skills_development_providers,P.accreditation_number,P.physical_address,P.city,contact_no,P.start_date,P.end_date;
+
+
+http://www.journaldev.com/3422/hibernate-native-sql-query-example
+http://stackoverflow.com/questions/13607337/hibernate-query-for-selecting-multiple-values
+
+http://www.wideskills.com/hibernate/native-sql-and-named-queries-in-hibernate
+
+http://www.wideskills.com/hibernate/native-sql-and-named-queries-in-hibernate
+
+
+
+GROUP_CONCAT(C.course_name SEPARATOR '+') as Programmes_Accredited_For
+
+http://stackoverflow.com/questions/26524067/get-servlet-attribute-without-loading-current-jsp-page
+https://www.quora.com/How-do-I-get-data-from-database-on-a-click-on-same-page-in-jsp-without-loading
+http://stackoverflow.com/questions/26524067/get-servlet-attribute-without-loading-current-jsp-page
+
+
+https://madushankaperera.wordpress.com/2013/03/12/submitting-jsp-form-data-to-servlet-with-jquery-ajax/
+
+
+https://sitesforprofit.com/responsive-tables-in-wordpress
+https://elvery.net/demo/responsive-tables/
+https://sitesforprofit.com/responsive-table-plugins-and-patterns
+http://allthingssmitty.com/2016/10/03/responsive-table-layout/
+https://techblog.livingsocial.com/blog/2015/04/06/responsive-tables-in-pure-css/
