@@ -25,27 +25,25 @@ public class CityDAO extends AbstractDAO{
 		String message;
 		List<Object[]> pro = findProvinceById(provinceId);
 		System.out.println("Province before if === "+pro);
+		System.out.println("ProvinceId === "+provinceId);
 		
 		//if(provinceId.equals(pro)) 
-		if(pro.equals(provinceId))
+		if(pro.size() > 0)
 		{ 
 			System.out.println("Province === "+pro);
 			provinces.setProvinceId(provinceId);
+			System.out.println("Province === "+ provinces.toString());
 			city.setProvinces(provinces);
+			System.out.println("Province === "+ city.toString());
 			super.create(city);
+			System.out.println("Province === "+ city.toString());
 			message = "City has been added successfully" ;
 		}
 		else
 		{   System.out.println("Province else === "+pro);
 			message = "Province don't exist" ;
 		}
-		//city.setProvinces(pro.);
-		//province1.setProvinceId(provinceId);
-		//System.out.println("Province === "+city);
-		//city.setProvinces(province1);
-		//pro.getCity().add(city);
-		//super.create(city);
-		//return "City has been added successfully";
+		
 		return message;
 	}
 	

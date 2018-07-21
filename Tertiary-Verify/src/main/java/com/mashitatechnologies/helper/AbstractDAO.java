@@ -198,7 +198,7 @@ public abstract class AbstractDAO implements Serializable {
 				for (String key : parameters.keySet())
 					addParameter(query, key, parameters.get(key));
 			((SQLQuery) query).addScalar("province_id", LongType.INSTANCE);
-			result = query.list();
+			//result = query.list();
 		} catch (HibernateException e) {
 			throw e;
 		} finally {
