@@ -35,12 +35,6 @@ public class City implements IDataEntity,java.io.Serializable{
 	@Column(name = "city_name", nullable = false)
 	private String cityName;
 	
-	@Column(name = "city_abbriation", nullable = false)
-	private String cityAbbriation;
-	
-	@Column(name = "city_code", nullable = false)
-	private int cityCode;
-	
     @ManyToOne
     @JoinColumn(name = "province_id", nullable = false)
 	private Provinces provinces;
@@ -62,24 +56,6 @@ public class City implements IDataEntity,java.io.Serializable{
 	}
 	
 	
-	public String getCityAbbriation() {
-		return cityAbbriation;
-	}
-
-	public void setCityAbbriation(String cityAbbriation) {
-		this.cityAbbriation = cityAbbriation;
-	}
-	
-	public int getCityCode() {
-		return cityCode;
-	}
-
-	public void setCityCode(int cityCode) {
-		this.cityCode = cityCode;
-	}
-	
-	//@ManyToOne
-	//@JoinColumn(name = "province_id", nullable = false)
 	public Provinces getProvinces() {
 		return provinces;
 	}
@@ -90,8 +66,7 @@ public class City implements IDataEntity,java.io.Serializable{
 	
 	@Override
 	public String toString() {
-		return "Cities [cityId=" + cityId + ", cityAbbriation=" + cityAbbriation + ", cityCode=" + cityCode 
-				+ ", cityName=" + cityName + ", provinces=" + provinces + "]";
+		return "Cities [cityId=" + cityId + ", cityName=" + cityName + ", provinces=" + provinces + "]";
 	}
 
 }

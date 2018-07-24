@@ -33,8 +33,8 @@ public class Course implements IDataEntity {
 	@Column(name = "course_name", nullable = false)
 	private String courseName;
 	
-	@Column(name = "course_code", nullable = true)
-	private String courseCode;
+	@Column(name = "accreditation_number", nullable = true)
+	private String accreditationNumber;
 	
 	@ManyToMany(mappedBy="courses")
 	//private Set institutions = new HashSet();
@@ -73,12 +73,12 @@ public class Course implements IDataEntity {
 		this.courseName = courseName;
 	}
 
-	public String getCourseCode() {
-		return courseCode;
+	public String getAccreditationNumber() {
+		return accreditationNumber;
 	}
 
-	public void setCourseCode(String courseCode) {
-		this.courseCode = courseCode;
+	public void setAccreditationNumber(String accreditationNumber) {
+		this.accreditationNumber = accreditationNumber;
 	}
 	
 	
@@ -94,6 +94,6 @@ public class Course implements IDataEntity {
 	@Override
 	public String toString() {
 		return "Course [courseId=" + courseId + ", courseType=" + courseType + ", courseName=" + courseName + ", courseLevel=" + courseLevel
-				+ ", courseCode=" + courseCode + ", institutions=" + institutions + "]";
+				+ ", accreditationNumber=" + accreditationNumber + ", institutions=" + institutions + "]";
 	}
 }

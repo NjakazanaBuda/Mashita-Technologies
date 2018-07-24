@@ -38,9 +38,11 @@ public class CityController {
 	}
 	
 	@RequestMapping(value = CityURIConstants.CREATE_CITY, method = RequestMethod.POST)
-	public @ResponseBody String createCity(@PathVariable("provinceId") Long provinceId, @RequestBody City city) {
+	//public @ResponseBody String createCity(@PathVariable("provinceId") Long provinceId, @RequestBody City city) {
+	public @ResponseBody String createCity(@RequestBody City city) {
 		try {
-			return cityDAO.createCity(city,provinceId);
+			//return cityDAO.createCity(city,provinceId);
+			return cityDAO.createCity(city);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return e.getMessage();

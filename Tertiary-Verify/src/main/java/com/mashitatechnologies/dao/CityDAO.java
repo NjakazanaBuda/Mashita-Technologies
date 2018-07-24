@@ -20,20 +20,21 @@ public class CityDAO extends AbstractDAO{
 		return new MySQLProvider();
 	}
 	
-	public String createCity(City city, Long provinceId) throws Exception {
-		Provinces provinces = new Provinces();
+	//public String createCity(City city, Long provinceId) throws Exception {
+	public String createCity(City city) throws Exception {
+		
 		String message;
-		List<Object[]> pro = findProvinceById(provinceId);
+		Long provinceId;
+		List<Object[]> pro;
+		provinceId = city.getProvinces().getProvinceId();
+		pro = findProvinceById(provinceId);
+		
 		System.out.println("Province before if === "+pro);
 		System.out.println("ProvinceId === "+provinceId);
-		
-		//if(provinceId.equals(pro)) 
+		 
 		if(pro.size() > 0)
 		{ 
-			System.out.println("Province === "+pro);
-			provinces.setProvinceId(provinceId);
-			System.out.println("Province === "+ provinces.toString());
-			city.setProvinces(provinces);
+		
 			System.out.println("Province === "+ city.toString());
 			super.create(city);
 			System.out.println("Province === "+ city.toString());

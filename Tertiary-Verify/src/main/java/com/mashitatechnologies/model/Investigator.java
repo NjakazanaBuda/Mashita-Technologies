@@ -56,8 +56,9 @@ public class Investigator implements IDataEntity {
 	@JsonBackReference
 	private Provinces provinces;
 	
+	//please add relationship
 	@Column(name = "town_address_line4", nullable = false)
-	private String townAddressLineFour;
+	private Long townAddressLineFour;
 	
 	@Column(name = "contact_no", nullable = false)
 	private Long contactNo;
@@ -146,11 +147,11 @@ public class Investigator implements IDataEntity {
 		this.provinces = provinces;
 	}
 	
-	public String getTownAddressLineFour() {
+	public Long getTownAddressLineFour() {
 		return townAddressLineFour;
 	}
 
-	public void setTownAddressLineFour(String townAddressLineFour) {
+	public void setTownAddressLineFour(Long townAddressLineFour) {
 		this.townAddressLineFour = townAddressLineFour;
 	}
 	

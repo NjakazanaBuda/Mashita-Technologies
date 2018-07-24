@@ -38,8 +38,6 @@ public class Provinces implements IDataEntity,java.io.Serializable {
 	@Column(name = "province_name", nullable = false)
 	private String provinceName;
 	
-	@Column(name = "province_abbriation", nullable = false)
-	private String provinceAbbriation;
 	
 	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name="province_id")
@@ -55,7 +53,6 @@ public class Provinces implements IDataEntity,java.io.Serializable {
 	
 	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name="province_id")
-	//public Set<City> city = new HashSet<City>(0);
 	public Set<City> city;
 	
 
@@ -75,13 +72,7 @@ public class Provinces implements IDataEntity,java.io.Serializable {
 		this.provinceName = provinceName;
 	}
 
-	public String getProvinceAbbriation() {
-		return provinceAbbriation;
-	}
-
-	public void setProvinceAbbriation(String provinceAbbriation) {
-		this.provinceAbbriation = provinceAbbriation;
-	}
+	
 	
 	public Set<Institution> getInstitutions() {
 		return institutions;
@@ -119,8 +110,8 @@ public class Provinces implements IDataEntity,java.io.Serializable {
 	
 	@Override
 	public String toString() {
-		return "Provinces [provinceId=" + provinceId + ", provinceName=" + provinceName + ", provinceAbbriation=" + provinceAbbriation 
-				+ ", institutions=" + institutions + ", investigators=" + investigators + ", reportinstitution=" + reportinstitution 
+		return "Provinces [provinceId=" + provinceId + ", provinceName=" + provinceName + ", institutions=" + institutions 
+				+ ", investigators=" + investigators + ", reportinstitution=" + reportinstitution 
 				+ ", city=" + city + "]";
 		
 	}

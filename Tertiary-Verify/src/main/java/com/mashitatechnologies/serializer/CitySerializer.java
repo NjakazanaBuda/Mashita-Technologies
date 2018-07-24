@@ -29,8 +29,6 @@ public class CitySerializer extends JsonSerializer<City>{
   
        jgen.writeStartObject();
         jgen.writeNumberField("cityId", city.getCityId());
-        jgen.writeStringField("cityAbbriation", city.getCityAbbriation());
-        jgen.writeNumberField("cityCode", city.getCityCode());
        jgen.writeStringField("cityName", city.getCityName());
        jgen.writeNumberField("cityProvince", city.getProvinces().getProvinceId());
         jgen.writeEndObject();

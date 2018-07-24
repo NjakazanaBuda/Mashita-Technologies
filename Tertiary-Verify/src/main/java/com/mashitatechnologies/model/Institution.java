@@ -30,8 +30,8 @@ public class Institution implements IDataEntity,java.io.Serializable {
 	@Column(name = "institution_id", unique = true, nullable = false)
 	private Long institutionId;
 	
-	@Column(name = "institution_type", nullable = false)
-	private String institutionType;
+	@Column(name = "institution_type_id", nullable = false)
+	private Long institutionType;
 	
 	@Column(name = "institution_name", nullable = false)
 	private String institutionName;
@@ -47,8 +47,9 @@ public class Institution implements IDataEntity,java.io.Serializable {
 	@JsonBackReference
 	private Provinces provinces;
 	
+	//please add relationship
 	@Column(name = "town_address_line4", nullable = false)
-	private String townAddressLineFour;
+	private Long townAddressLineFour;
 	
 	@Column(name = "contact_no", nullable = false)
 	private Long contactNo;
@@ -67,6 +68,9 @@ public class Institution implements IDataEntity,java.io.Serializable {
 	
 	@Column(name = "accreditation_end_date", nullable = true)
 	private String accreditationEndDate;
+	
+	@Column(name = "isactive", nullable = true)
+	private String isactive;
 
 	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="courses_institutions", joinColumns= {@JoinColumn(name="institution_id")},  inverseJoinColumns= {@JoinColumn(name="course_id")})
@@ -80,11 +84,11 @@ public class Institution implements IDataEntity,java.io.Serializable {
 		this.institutionId = institutionId;
 	}
 
-	public String getInstitutionType() {
+	public Long getInstitutionType() {
 		return institutionType;
 	}
 
-	public void setInstitutionType(String institutionType) {
+	public void setInstitutionType(Long institutionType) {
 		this.institutionType = institutionType;
 	}
 	
@@ -113,11 +117,11 @@ public class Institution implements IDataEntity,java.io.Serializable {
 		this.insttitutionAddressLineTwo = insttitutionAddressLineTwo;
 	}
 	
-	public String getTownAddressLineFour() {
+	public Long getTownAddressLineFour() {
 		return townAddressLineFour;
 	}
 
-	public void setTownAddressLineFour(String townAddressLineFour) {
+	public void setTownAddressLineFour(Long townAddressLineFour) {
 		this.townAddressLineFour = townAddressLineFour;
 	}
 	
@@ -168,6 +172,15 @@ public class Institution implements IDataEntity,java.io.Serializable {
 	public void setAccreditationEndDate(String accreditationEndDate) {
 		this.accreditationEndDate = accreditationEndDate;
 	}
+	
+	
+	public String getIsActive() {
+		return isactive;
+	}
+
+	public void setIsActive(String isactive) {
+		this.isactive = isactive;
+	}
 
 	
 	public Provinces getProvinces() {
@@ -191,7 +204,7 @@ public class Institution implements IDataEntity,java.io.Serializable {
 				+ ", insttitutionAddressLineTwo=" + insttitutionAddressLineTwo + ", contactNo=" + contactNo + ", alternativeContactNo=" + alternativeContactNo
 				+ ", emailAddress=" + emailAddress + ", accreditationNumber=" + accreditationNumber + ", accreditationStartDate="
 				+ accreditationStartDate + ", accreditationEndDate=" + accreditationEndDate + ", Provinces=" + provinces + ", townAddressLineFour="
-				+ townAddressLineFour + ", institutionName=" + institutionName + ", courses=" + courses + "]";
+				+ townAddressLineFour + ", institutionName=" + institutionName + ", courses=" + courses + ", isactive=" + isactive + "]";
 	} 
 	
 }

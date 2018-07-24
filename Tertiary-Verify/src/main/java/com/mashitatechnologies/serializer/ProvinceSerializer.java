@@ -18,7 +18,6 @@ public class ProvinceSerializer extends JsonSerializer<Provinces> {
         jsonGen.writeStartObject();
         jsonGen.writeNumberField("provinceId", province.getProvinceId());
         jsonGen.writeStringField("provinceName", province.getProvinceName());
-        jsonGen.writeStringField("provinceAbbriation", province.getProvinceAbbriation());
         jsonGen.writeEndObject();
 
     }
