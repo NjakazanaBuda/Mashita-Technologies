@@ -19,26 +19,47 @@ public class InstitutionDAO extends AbstractDAO  {
 	}
 	
 	public String createInstitution(Institution institution) throws Exception {
-		super.create(institution);
-		return "Institution created successfully";
+		String message;
+		Long provinceId;
+		List<Object[]> pro;
+		provinceId = institution.getProvinces().getProvinceId();
+		pro = findProvinceById(provinceId);
+		
+		
+		System.out.println("Province before if === "+pro);
+		System.out.println("ProvinceId === "+provinceId);
+		 
+		if(pro.size() > 0)
+		{ 
+			System.out.println("Province === "+ institution.toString());
+			super.create(institution);
+			System.out.println("Province === "+ institution.toString());
+			message = "Institution has been added successfully" ;
+		}
+		else
+		{   System.out.println("Province else === "+pro);
+			message = "Province don't exist" ;
+		}
+		
+		return message;
 	}
 
 	public Institution findInstitutionById(Long id)throws Exception {
-		String query = "select o from Company o where o.id =:id";
+		String query = "select o from Institution o where o.id =:id";
 		Map<String,Object>parameters = new Hashtable<String,Object>();
 		parameters.put("id", id);
 		return (Institution)super.getUniqueResult(query, parameters);
 	}
 	
 	public Institution findInstitutionByName(String name)throws Exception {
-		String query = "select o from Company o where o.id =:id";
+		String query = "select o from Institution o where o.id =:id";
 		Map<String,Object>parameters = new Hashtable<String,Object>();
 		parameters.put("name", name);
 		return (Institution)super.getUniqueResult(query, parameters);
 	}
 	
 	public Institution findInstitutionByRegistrationNumber(String regNumber)throws Exception {
-		String query = "select o from Company o where o.id =:id";
+		String query = "select o from Institution o where o.id =:id";
 		Map<String,Object>parameters = new Hashtable<String,Object>();
 		parameters.put("regNumber", regNumber);
 		return (Institution)super.getUniqueResult(query, parameters);
@@ -64,6 +85,13 @@ public class InstitutionDAO extends AbstractDAO  {
 	
 	@SuppressWarnings("unchecked")
 	public List<Institution> getAllInstitution() throws Exception {
-		return (List<Institution>)super.getList("select o from Company o ");
+		return (List<Institution>)super.getList("select o from Institution o ");
+	}
+	
+	public List<Object[]> findProvinceById(Long province_id) throws Exception {
+		String query = "select o.provinceId from Provinces o where o.provinceId =:province_id";
+		Map<String,Object>parameters = new Hashtable<String,Object>();
+		parameters.put("province_id", province_id);
+		return (List<Object[]>)super.getList(query, parameters);
 	}
 }

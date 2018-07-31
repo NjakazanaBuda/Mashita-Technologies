@@ -1,9 +1,11 @@
 package com.mashitatechnologies.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,10 +55,9 @@ public class Investigator implements IDataEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "province_id", nullable = false)
-	@JsonBackReference
 	private Provinces provinces;
 	
-	//please add relationship
+	
 	@Column(name = "town_address_line4", nullable = false)
 	private Long townAddressLineFour;
 	
@@ -69,10 +70,14 @@ public class Investigator implements IDataEntity {
 	@Column(name = "email_address", nullable = false)
 	private String emailAddress;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="reported_institution_invesigator", joinColumns={@JoinColumn(name ="investigator_number", referencedColumnName ="investigator_number")},
-			inverseJoinColumns={@JoinColumn(name ="reported_institution_id", referencedColumnName ="reported_institution_id")})
-	private Set<ReportInstitution> reportedInstitution;
+	//@OneToMany(cascade=CascadeType.ALL)
+	//@JoinTable(name="reported_institution_invesigator", joinColumns={@JoinColumn(name ="investigator_number", referencedColumnName ="investigator_number")},
+			//inverseJoinColumns={@JoinColumn(name ="reported_institution_id", referencedColumnName ="reported_institution_id")})
+	//private Set<ReportInstitution> reportedInstitution;
+	
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinColumn(name="investigator_number")
+	private Set<ReportInstitution> reportedInstitution = new HashSet<ReportInstitution>();
 	
 
 	public Long getInvestigatorNumber() {

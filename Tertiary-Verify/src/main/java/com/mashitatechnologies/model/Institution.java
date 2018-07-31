@@ -15,12 +15,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mashitatechnologies.helper.IDataEntity;
 import com.mashitatechnologies.model.Provinces;
 
+import com.mashitatechnologies.serializer.InstitutionSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 @Entity
+@JsonSerialize(using = InstitutionSerializer.class)
 @Table(name="institutions")
 public class Institution implements IDataEntity,java.io.Serializable {
 
@@ -30,26 +33,24 @@ public class Institution implements IDataEntity,java.io.Serializable {
 	@Column(name = "institution_id", unique = true, nullable = false)
 	private Long institutionId;
 	
-	@Column(name = "institution_type_id", nullable = false)
-	private Long institutionType;
+	@Column(name = "institution_type", nullable = false)
+	private String institutionType;
 	
 	@Column(name = "institution_name", nullable = false)
 	private String institutionName;
 	
-	@Column(name = "insttitution_address_line1", nullable = false)
+	@Column(name = "institution_address_line1", nullable = false)
 	private String insttitutionAddressLineOne;
 	
-	@Column(name = "insttitution_address_line2", nullable = false)
+	@Column(name = "institution_address_line2", nullable = false)
 	private String insttitutionAddressLineTwo;
 	
 	@ManyToOne
 	@JoinColumn(name = "province_id", nullable = true)
-	@JsonBackReference
 	private Provinces provinces;
 	
-	//please add relationship
 	@Column(name = "town_address_line4", nullable = false)
-	private Long townAddressLineFour;
+	private String townAddressLineFour;
 	
 	@Column(name = "contact_no", nullable = false)
 	private Long contactNo;
@@ -70,10 +71,12 @@ public class Institution implements IDataEntity,java.io.Serializable {
 	private String accreditationEndDate;
 	
 	@Column(name = "isactive", nullable = true)
-	private String isactive;
+	private String isActive;
 
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="courses_institutions", joinColumns= {@JoinColumn(name="institution_id")},  inverseJoinColumns= {@JoinColumn(name="course_id")})
+	//@ManyToMany(cascade = {CascadeType.ALL})
+	//@JoinTable(name="courses_institutions", joinColumns= {@JoinColumn(name="institution_id")},  inverseJoinColumns= {@JoinColumn(name="course_id")})
+	//private Set<Course> courses;
+	@ManyToMany(mappedBy="institutions")
 	private Set<Course> courses;
 	
 	public Long getInstitutionId() {
@@ -84,11 +87,11 @@ public class Institution implements IDataEntity,java.io.Serializable {
 		this.institutionId = institutionId;
 	}
 
-	public Long getInstitutionType() {
+	public String getInstitutionType() {
 		return institutionType;
 	}
 
-	public void setInstitutionType(Long institutionType) {
+	public void setInstitutionType(String institutionType) {
 		this.institutionType = institutionType;
 	}
 	
@@ -117,11 +120,11 @@ public class Institution implements IDataEntity,java.io.Serializable {
 		this.insttitutionAddressLineTwo = insttitutionAddressLineTwo;
 	}
 	
-	public Long getTownAddressLineFour() {
+	public String getTownAddressLineFour() {
 		return townAddressLineFour;
 	}
 
-	public void setTownAddressLineFour(Long townAddressLineFour) {
+	public void setTownAddressLineFour(String townAddressLineFour) {
 		this.townAddressLineFour = townAddressLineFour;
 	}
 	
@@ -175,11 +178,11 @@ public class Institution implements IDataEntity,java.io.Serializable {
 	
 	
 	public String getIsActive() {
-		return isactive;
+		return isActive;
 	}
 
-	public void setIsActive(String isactive) {
-		this.isactive = isactive;
+	public void setIsActive(String isActive) {
+		this.isActive = isActive;
 	}
 
 	
@@ -204,7 +207,7 @@ public class Institution implements IDataEntity,java.io.Serializable {
 				+ ", insttitutionAddressLineTwo=" + insttitutionAddressLineTwo + ", contactNo=" + contactNo + ", alternativeContactNo=" + alternativeContactNo
 				+ ", emailAddress=" + emailAddress + ", accreditationNumber=" + accreditationNumber + ", accreditationStartDate="
 				+ accreditationStartDate + ", accreditationEndDate=" + accreditationEndDate + ", Provinces=" + provinces + ", townAddressLineFour="
-				+ townAddressLineFour + ", institutionName=" + institutionName + ", courses=" + courses + ", isactive=" + isactive + "]";
+				+ townAddressLineFour + ", institutionName=" + institutionName + ", courses=" + courses + ", isactive=" + isActive + "]";
 	} 
 	
 }

@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.mashitatechnologies.helper.IDataEntity;
 import com.mashitatechnologies.model.Institution;
 import com.mashitatechnologies.model.Investigator;
@@ -32,6 +34,15 @@ public class Provinces implements IDataEntity,java.io.Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@Id
+	//@GeneratedValue(
+	   // strategy= GenerationType.AUTO, 
+	    //generator="native"
+	//)
+	//@GenericGenerator(
+	  //  name = "native", 
+	    //strategy = "native"
+	//)
 	@Column(name = "province_id", unique = true, nullable = false)
 	private Long provinceId;
 	

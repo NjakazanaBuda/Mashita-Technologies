@@ -51,7 +51,6 @@ public class ReportInstitution implements IDataEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "province_id", nullable = false)
-	@JsonBackReference
 	private Provinces provinces;
 
 	@Column(name = "city_town", nullable = false)
@@ -66,9 +65,12 @@ public class ReportInstitution implements IDataEntity {
 	@Column(name = "pin_location", nullable = false)
 	private String pinLocation;
 	
-	@OneToOne(cascade=CascadeType.ALL)  
-	@JoinTable(name="reported_institution", joinColumns={@JoinColumn(name ="reported_institution_id", referencedColumnName ="reported_institution_id")},
-	          inverseJoinColumns={@JoinColumn(name ="investigator_number", referencedColumnName ="investigator_number")})
+	//@OneToOne(cascade=CascadeType.ALL)  
+	//@JoinTable(name="reported_institution", joinColumns={@JoinColumn(name ="reported_institution_id", referencedColumnName ="reported_institution_id")},
+	          //inverseJoinColumns={@JoinColumn(name ="investigator_number", referencedColumnName ="investigator_number")})
+	//private Investigator investigator;
+	@ManyToOne
+    @JoinColumn(name = "investigator_number", nullable = true)
 	private Investigator investigator;
 	
 	

@@ -3,17 +3,25 @@ package com.mashitatechnologies.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Table;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mashitatechnologies.helper.IDataEntity;
 
+import com.mashitatechnologies.serializer.CourseSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
+@JsonSerialize(using = CourseSerializer.class)
 @Table(name="courses")
 public class Course implements IDataEntity {
 	
@@ -33,11 +41,14 @@ public class Course implements IDataEntity {
 	@Column(name = "course_name", nullable = false)
 	private String courseName;
 	
-	@Column(name = "accreditation_number", nullable = true)
-	private String accreditationNumber;
+	//@Column(name = "accreditation_number", nullable = true)
+	//private String accreditationNumber;
 	
-	@ManyToMany(mappedBy="courses")
-	//private Set institutions = new HashSet();
+	//@ManyToMany(mappedBy="courses")
+	//private Set<Institution> institutions;
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name="courses_institutions", joinColumns= {@JoinColumn(name="course_id")},  inverseJoinColumns= {@JoinColumn(name="institution_id")})
+	@JsonIgnore
 	private Set<Institution> institutions;
 
 	
@@ -73,13 +84,13 @@ public class Course implements IDataEntity {
 		this.courseName = courseName;
 	}
 
-	public String getAccreditationNumber() {
-		return accreditationNumber;
-	}
+	//public String getAccreditationNumber() {
+		//return accreditationNumber;
+	//}
 
-	public void setAccreditationNumber(String accreditationNumber) {
-		this.accreditationNumber = accreditationNumber;
-	}
+	//public void setAccreditationNumber(String accreditationNumber) {
+		//this.accreditationNumber = accreditationNumber;
+	//}
 	
 	
 	public Set getInstitutions() {
@@ -94,6 +105,6 @@ public class Course implements IDataEntity {
 	@Override
 	public String toString() {
 		return "Course [courseId=" + courseId + ", courseType=" + courseType + ", courseName=" + courseName + ", courseLevel=" + courseLevel
-				+ ", accreditationNumber=" + accreditationNumber + ", institutions=" + institutions + "]";
+				+ ", institutions=" + institutions + "]";
 	}
 }
