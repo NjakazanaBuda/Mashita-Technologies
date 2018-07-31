@@ -2,6 +2,7 @@ package com.mashitatechnologies.model;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -65,10 +66,10 @@ public class Institution implements IDataEntity,java.io.Serializable {
 	private String accreditationNumber;
 	
 	@Column(name = "accreditation_start_date", nullable = true)
-	private String accreditationStartDate;
+	private Date accreditationStartDate;
 	
 	@Column(name = "accreditation_end_date", nullable = true)
-	private String accreditationEndDate;
+	private Date accreditationEndDate;
 	
 	@Column(name = "isactive", nullable = true)
 	private String isActive;
@@ -160,19 +161,19 @@ public class Institution implements IDataEntity,java.io.Serializable {
 		this.accreditationNumber = accreditationNumber;
 	}
 
-	public String getAccreditationStartDate() {
+	public Date getAccreditationStartDate() {
 		return accreditationStartDate;
 	}
 
-	public void setAccreditationStartDate(String accreditationStartDate) {
+	public void setAccreditationStartDate(Date accreditationStartDate) {
 		this.accreditationStartDate = accreditationStartDate;
 	}
 	
-	public String getAccreditationEndDate() {
+	public Date getAccreditationEndDate() {
 		return accreditationEndDate;
 	}
 
-	public void setAccreditationEndDate(String accreditationEndDate) {
+	public void setAccreditationEndDate(Date accreditationEndDate) {
 		this.accreditationEndDate = accreditationEndDate;
 	}
 	
